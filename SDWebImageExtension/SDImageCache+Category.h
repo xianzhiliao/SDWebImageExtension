@@ -22,19 +22,19 @@
 /**
  *  移除sd自带的内存缓存和磁盘缓存（会将磁盘缓存路径下的所有删除）
  */
-+ (void)clearSharedImageCache;
+- (void)clearSharedImageCache;
 /**
  *  删除sd自带的磁盘缓存中所有过期的存储如果超过最大值的话还会从最旧的删除知道减半
  */
-+ (void)cleanSharedDiskCache;
+- (void)cleanSharedDiskCache;
 /**
  *  移除自己扩展的存储处理过图片的所有缓存
  */
-+ (void)clearCategoryImageCache;
+- (void)clearCategoryImageCache;
 /**
  *  删除自己扩展的存储处理过图片的磁盘缓存中所有过期的存储如果超过最大值的话还会从最旧的删除知道减半
  */
-+ (void)cleanCategoryDiskCache;
+- (void)cleanCategoryDiskCache;
 
 
 

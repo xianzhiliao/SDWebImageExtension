@@ -25,7 +25,8 @@
     _window.backgroundColor = [UIColor blackColor];
     [_window makeKeyAndVisible];
     ViewController *vc = [ViewController new];
-    _window.rootViewController = vc;
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:vc];
+    _window.rootViewController = nav;
     
     // 设置url的key值
     SDWebImageManager.sharedManager.cacheKeyFilter = ^(NSURL *url) {

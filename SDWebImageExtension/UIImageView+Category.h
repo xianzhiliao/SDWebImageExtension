@@ -22,6 +22,7 @@
  *  @param completedBlock completedBlock description
  */
 - (void)sd_category_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
+- (void)sd_category_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;
 /**
  *  获取需要处理图片的当前url
  *

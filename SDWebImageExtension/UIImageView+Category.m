@@ -27,8 +27,6 @@ static char imageURLKey;
  *  @param progressBlock  progressBlock description
  *  @param completedBlock completedBlock description
  */
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 - (void)sd_category_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
 {
     [self sd_cancelCurrentImageLoad];
@@ -96,7 +94,10 @@ static char imageURLKey;
     }
 }
 
-#pragma clang diagnostic pop
+- (void)sd_category_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
+{
+    [self sd_category_setImageWithURL:url placeholderImage:placeholder options:SDWebImageTransformAnimatedImage progress:nil completed:nil];
+}
 
 /**
  *  获取需要处理图片的当前url
