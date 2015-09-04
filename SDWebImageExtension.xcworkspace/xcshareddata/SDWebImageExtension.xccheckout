@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>465404B7-5883-4539-BCD2-63A050A9D277</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SDWebImageExtension</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>46202433A4213FFBCC242ECF373DCF410E7D5775</key>
+		<string>https://github.com/xianzhiliao/SDWebImageExtension.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SDWebImageExtension.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>46202433A4213FFBCC242ECF373DCF410E7D5775</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/xianzhiliao/SDWebImageExtension.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>46202433A4213FFBCC242ECF373DCF410E7D5775</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>46202433A4213FFBCC242ECF373DCF410E7D5775</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SDWebImageExtension</string>
+		</dict>
+	</array>
+</dict>
+</plist>

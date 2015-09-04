@@ -12,7 +12,28 @@
 
 
 @interface UIImageView(Category)
-
+/**
+ *  图片需要处理的调用方法
+ *
+ *  @param url            url description
+ *  @param placeholder    placeholder description
+ *  @param options        options description
+ *  @param progressBlock  progressBlock description
+ *  @param completedBlock completedBlock description
+ */
 - (void)sd_category_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
+/**
+ *  获取需要处理图片的当前url
+ *
+ *  @return 图片url
+ */
 - (NSURL *)sd_category_imageURL;
+/**
+ *  本地图片加载
+ *
+ *  @param name      图片名
+ *  @param directory 绝对目录名
+ */
+- (void)sd_category_setLocalImageWithNamed:(NSString *)name inDirectory:(NSString*)directory;
+
 @end

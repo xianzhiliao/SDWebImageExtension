@@ -13,6 +13,11 @@
 
 @implementation SDImageCache(Category)
 
+/**
+ *  所有经过处理的图片都会保存到这个缓存路径下
+ *
+ *  @return 处理过图片的缓存路径
+ */
 + (SDImageCache *)sd_category_imageCache
 {
     static dispatch_once_t once;
@@ -22,22 +27,46 @@
     });
     return instance;
 }
-+ (SDImageCache *)sd_category_localImageCache
-{
-    static dispatch_once_t once;
-    static id instance;
-    dispatch_once(&once, ^{
-        instance = [[SDImageCache alloc]initWithNamespace:@"localImage"];
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSMutableString *path = [NSMutableString stringWithString:[[NSBundle mainBundle]bundlePath]];
-        [path appendString:@"/"];
-        [instance setValue:path forKey:@"diskCachePath"];
 
-    });
-    return instance;
+// clear 指的是移除所有缓存
+// clean 指的是移除过期的(一周 kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7;)并且如果设置了maxSize会超出的话会清到一半
+/**
+ *  移除sd自带的内存缓存和磁盘缓存（会将磁盘缓存路径下的所有删除）
+ */
++ (void)clearSharedImageCache
+{
+    [SDWebImageManager.sharedManager.imageCache clearMemory];
+    
+    [SDWebImageManager.sharedManager.imageCache clearDisk];
+    
 }
 /**
-    重写此方法,所有图片转成png,否则png会失去透明度
+ *  删除sd自带的磁盘缓存中所有过期的存储如果超过最大值的话还会从最旧的删除知道减半
+ */
++ (void)cleanSharedDiskCache
+{
+    [[SDWebImageManager sharedManager].imageCache cleanDisk];
+}
+/**
+ *  移除自己扩展的存储处理过图片的所有缓存
+ */
++ (void)clearCategoryImageCache
+{
+    [[SDWebImageManager sd_category_webImageManager].imageCache clearMemory];
+    
+    [[SDWebImageManager sd_category_webImageManager].imageCache clearDisk];
+}
+/**
+ *  删除自己扩展的存储处理过图片的磁盘缓存中所有过期的存储如果超过最大值的话还会从最旧的删除知道减半
+ */
++ (void)cleanCategoryDiskCache
+{
+    [[SDWebImageManager sd_category_webImageManager].imageCache cleanDisk];
+}
+
+
+/**
+    重写存储方法,所有图片转成png,否则png会失去透明度
  */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
@@ -87,10 +116,5 @@
     }
 }
 #pragma clang diagnostic pop
-
-//- (NSURL *)sd_category_imageURL {
-//    return objc_getAssociatedObject(self, &imageURLKey);
-//}
-
 
 @end

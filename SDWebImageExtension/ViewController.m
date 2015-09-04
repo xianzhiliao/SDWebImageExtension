@@ -30,6 +30,7 @@ typedef void(^SDDownLoadImageProcessBlock)();
     [self requestImageFromLocal];
     
 //    [SDWebImageManager clearCategoryImageCache];
+    [SDImageCache cleanSharedDiskCache];
     NSURL *url = [[NSBundle mainBundle]URLForResource:@"0" withExtension:@".png"];
     NSLog(@"url is %@",url);
 }
@@ -71,19 +72,23 @@ typedef void(^SDDownLoadImageProcessBlock)();
     MyTableViewCell *cell = (MyTableViewCell*)[tableView dequeueReusableCellWithIdentifier:identifer];
     NSString *imageUrl = _arrayData[indexPath.row];
     [SDWebImageManager sd_category_webImageManager].delegate = cell;
-//    static UIImage *placeHolder;
-//    placeHolder = [UIImage GLImage:[UIImage imageNamed:@"grape"] StyleRoundRect:(GLImageStyleRoundRectMake(cell.myImageView.frame.size.height / 4)) inImageView:cell.myImageView];
-//    [cell.myImageView sd_category_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-//        
-//    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//        
-//    }];
-    NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"prefixImages/0.png"];
-    [cell.myImageView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:@"0.png"] andPlaceholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    static UIImage *placeHolder;
+    placeHolder = [UIImage GLImage:[UIImage imageNamed:@"grape"] StyleRoundRect:(GLImageStyleRoundRectMake(cell.myImageView.frame.size.height / 4)) inImageView:cell.myImageView];
+    [cell.myImageView sd_category_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
     }];
+    
+    // 本地图片加载用sd自带的,在AppDelegate中添加了只读缓存路径，会从中读取(弊端就是图片名字全部要用md5加密过后的)
+//    [cell.myImageView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:@"0.png"] andPlaceholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//        
+//    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//        
+//    }];
+    
+    //完全抄袭sd,把图片名字换成了明文而已
+//    [cell.myImageView sd_category_setLocalImageWithNamed:@"putao_icon_quick_jk_s"inDirectory:@"prefixImages"];
     return cell;
 }
 

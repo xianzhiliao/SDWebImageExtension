@@ -12,11 +12,21 @@
 #include "UIView+WebCacheOperation.h"
 #import "SDWebImageManager+Category.h"
 #import "SDWebImageDecoder.h"
+#import "UIImage+MultiFormat.h"
 
 static char imageURLKey;
 
 @implementation UIImageView(Category)
 
+/**
+ *  图片需要处理的调用方法
+ *
+ *  @param url            url description
+ *  @param placeholder    placeholder description
+ *  @param options        options description
+ *  @param progressBlock  progressBlock description
+ *  @param completedBlock completedBlock description
+ */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 - (void)sd_category_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
@@ -88,14 +98,58 @@ static char imageURLKey;
 
 #pragma clang diagnostic pop
 
+/**
+ *  获取需要处理图片的当前url
+ *
+ *  @return 图片url
+ */
 - (NSURL *)sd_category_imageURL
 {
     return objc_getAssociatedObject(self, &imageURLKey);
 }
-
-
-
-
+/**
+ *  本地图片加载
+ *
+ *  @param name      图片名
+ *  @param directory 绝对目录名
+ */
+- (void)sd_category_setLocalImageWithNamed:(NSString *)name inDirectory:(NSString*)directory
+{
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:name]];
+    // 从内存取
+    UIImage *image = [[SDWebImageManager sharedManager].imageCache imageFromMemoryCacheForKey:key];
+    if (image) {
+        dispatch_main_async_safe(^{
+            self.image = image;
+        });
+        return;
+    }
+    // 没有的话从磁盘取
+    // 图片存储路径
+    NSString *prefixImagePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",directory]];
+    NSInteger scale = [[UIScreen mainScreen]scale];
+    if (scale != 3) {
+        scale = 2;
+    }
+    NSString *fullPath = [prefixImagePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@@%ldx.png",name,(long)scale]];
+    NSData *data = [NSData dataWithContentsOfFile:fullPath];
+    if (data) {
+        UIImage *diskImage = [UIImage sd_imageWithData:data];
+        diskImage = SDScaledImageForKey(key, diskImage);;
+        if ([SDWebImageManager sharedManager].imageCache.shouldDecompressImages) {
+            diskImage = [UIImage decodedImageWithImage:diskImage];
+        }
+        if (diskImage) {
+            // 回显
+            dispatch_main_async_safe(^{
+                self.image = diskImage;
+            });
+            // 存内存
+            CGFloat cost = diskImage.size.height * diskImage.size.width * diskImage.scale * diskImage.scale;
+            [[[SDWebImageManager sharedManager].imageCache valueForKey:@"memCache"] setObject:diskImage forKey:key cost:cost];
+        }
+    }
+}
 
 
 @end

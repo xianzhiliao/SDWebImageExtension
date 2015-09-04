@@ -11,10 +11,12 @@
 
 
 @interface SDWebImageManager(Category)
-
+/**
+ *  web图片处理的SDWebImageManager
+ *
+ *  @return SDWebImageManager
+ */
 + (SDWebImageManager *)sd_category_webImageManager;
-+ (SDWebImageManager *)sd_category_localImageManager;
-+ (void)clearCategoryImageCache;
-+ (void)clearSharedImageCache;
-+ (void)cleanCategoryDiskCache;
+
+
 @end
