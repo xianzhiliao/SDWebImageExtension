@@ -36,12 +36,11 @@
 
 - (void)createSubView
 {
-    self.opaque = YES;
     _myImageView = [UIImageView new];
     _myImageView.backgroundColor = [UIColor clearColor];
     _myImageView.contentMode = UIViewContentModeScaleToFill;
     CGFloat imageWidth = (MyTableViewCellHeight - 2 * MarginTopAndBottom);
-//     先设置宽高,否则有时会获取不到(masonry异步,还没有调用约束?)
+//     先设置宽高,否则有时会获取不到(因为还没调用layoutSubviews)
     _myImageView.frame = CGRectMake(0, 0, imageWidth, imageWidth);
     self.contentView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_myImageView];
