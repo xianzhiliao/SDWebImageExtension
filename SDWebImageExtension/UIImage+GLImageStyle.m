@@ -37,7 +37,7 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
     if (imageView.contentMode == UIViewContentModeScaleToFill) {
         CGSize canvasSize = CGSizeMake(imageViewWidth, imageViewHeight);
         CGRect drawRect = CGRectMake(0,0,imageViewWidth,imageViewHeight);
-        return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize InDrawRect:drawRect];
+        return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
     }
     else if(imageView.contentMode == UIViewContentModeScaleAspectFit)
     {
@@ -45,50 +45,36 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
         if (imageViewHeight >= imageViewWidth) {
             CGSize canvasSize = CGSizeMake(imageViewHeight / heightWidthPercent, imageViewHeight);
             CGRect drawRect = CGRectMake(0, 0, canvasSize.width, canvasSize.height);
-            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize InDrawRect:drawRect];
+            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
         }
         else
         {
             CGSize canvasSize = CGSizeMake(imageViewWidth,imageViewWidth * heightWidthPercent);
             CGRect drawRect = CGRectMake(0, 0, canvasSize.width, canvasSize.height);
-            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize InDrawRect:drawRect];
+            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
         }
     }
     else if(imageView.contentMode == UIViewContentModeScaleAspectFill)
     {
-        //        // 画布大小和绘制区域
-        //        if (imageHeight / imageWidth >= imageViewHeight / imageViewWidth) {
-        //            if(imageViewWidth /imageWidth >= imageViewHeight / imageHeight)
-        //            {
-        //                CGSize canvasSize = CGSizeMake(imageWidth * imageHeight / imageWidth, imageViewWidth * imageHeight / imageWidth);
-        //                CGRect drawRect = CGRectMake((canvasSize.width - imageWidth)/2 ,(canvasSize.height - imageHeight) / 2,imageWidth,imageHeight);
-        //                return [self GLImageStyleRoundRectRadius:radius CanvasSize:canvasSize InDrawRect:drawRect];
-        //            }
-        //            else
-        //            {
-        //                CGSize canvasSize = CGSizeMake(imageViewWidth * imageHeight / imageWidth, imageViewHeight * imageHeight / imageWidth);
-        //                CGRect drawRect = CGRectMake((canvasSize.width - imageViewWidth)/2,(canvasSize.height - imageViewHeight) / 2,imageViewWidth,imageViewHeight);
-        //                return [self GLImageStyleRoundRectRadius:radius CanvasSize:canvasSize InDrawRect:drawRect];
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if(imageViewWidth >= imageWidth)
-        //            {
-        //                CGSize canvasSize = CGSizeMake(imageWidth * imageViewHeight / imageViewWidth, imageHeight * imageViewHeight / imageViewWidth);
-        //                CGRect drawRect = CGRectMake((canvasSize.width - imageWidth)/2,(canvasSize.height - imageHeight) / 2,imageWidth,imageHeight);
-        //
-        //                return [self GLImageStyleRoundRectRadius:radius CanvasSize:canvasSize InDrawRect:drawRect];
-        //            }
-        //            else
-        //            {
-        //                CGSize canvasSize = CGSizeMake(imageViewWidth * imageViewHeight / imageViewWidth, imageViewHeight * imageViewHeight / imageViewWidth);
-        //                CGRect drawRect = CGRectMake((canvasSize.width - imageViewWidth)/2,(canvasSize.height - imageViewHeight) / 2,imageViewWidth,imageViewHeight);
-        //                return [self GLImageStyleRoundRectRadius:radius CanvasSize:canvasSize InDrawRect:drawRect];
-        //            }
-        //        }
+        // 画布大小为图片放缩后的大小,drawRect是imageView的大小
         
-        return nil;
+        CGSize canvasSize;
+        CGRect drawRect;
+        CGFloat widthPercent = imageWidth / imageViewWidth;
+        CGFloat heightPercent = imageHeight / imageViewHeight;
+        CGFloat min = MIN(widthPercent, heightPercent);
+        canvasSize = CGSizeMake(imageWidth / min, imageHeight / min);
+        if (min == heightPercent) {
+            CGFloat x = (canvasSize.width - imageViewWidth) / 2;
+            drawRect = CGRectMake(x, 0, imageViewWidth, imageViewHeight);
+        }
+        else
+        {
+            CGFloat y = (canvasSize.height - imageViewHeight) / 2;
+            drawRect = CGRectMake(0, y, imageViewWidth, imageViewHeight);
+        }
+        
+        return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
     }
     else
     {
@@ -96,14 +82,19 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
     }
     
 }
-+ (UIImage *)GLImage:(UIImage *)image StyleRoundRectRadius:(CGFloat)radius CanvasSize:(CGSize )canvasSize InDrawRect:(CGRect)drawRect
++ (UIImage *)GLImage:(UIImage *)image StyleRoundRectRadius:(CGFloat)radius CanvasSize:(CGSize )canvasSize imageViewBackgroundColor:(UIColor *)bgcolor InDrawRect:(CGRect)drawRect
 {
     // 创建上下文
     //    UIGraphicsBeginImageContext(CGSizeMake(imageWidth, imageHeight));
-    // 上面创建的图片清晰度和质量没有第下面方法好(参数意义，size指定将来创建出来的bitmap的大小,yes 表示透明，scale 0表示不缩放)
-    UIGraphicsBeginImageContextWithOptions(canvasSize, NO, 0);
+    // 上面创建的图片清晰度和质量没有第下面方法好(参数意义，size指定将来创建出来的bitmap的大小,yes表示不透明，scale 表示缩放，0由系统计算)
+    UIGraphicsBeginImageContextWithOptions(canvasSize, YES, 0);
+
     // 获取上下文
     CGContextRef context = UIGraphicsGetCurrentContext();
+    // 设置背景色
+    [bgcolor setFill];
+    // 填充背景
+    UIRectFill(CGRectMake(0,0,canvasSize.width,canvasSize.height));
     // 设置画笔宽
     //    CGContextSetLineWidth(context, 2);
     // 设置画笔颜色
@@ -124,11 +115,10 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
     // 获取处理过后的图片
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-//    NSLog(@"before image size is %@",NSStringFromCGSize(image.size));
-    if ([SDImageCache sd_PTcategory_imageCache].shouldDecompressImages) {
-        image = [UIImage decodedImageWithImage:image];
-//        NSLog(@"after image size is %@",NSStringFromCGSize(image.size));
-    }
+
+//    if ([SDImageCache sd_PTcategory_imageCache].shouldDecompressImages) {
+//        image = [UIImage decodedImageWithImage:image];
+//    }
     return image;
 }
 
