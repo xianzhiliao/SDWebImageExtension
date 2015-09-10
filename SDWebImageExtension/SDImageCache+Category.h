@@ -17,7 +17,7 @@
  *
  *  @return 处理过图片的缓存路径
  */
-+ (SDImageCache *)sd_category_imageCache;
++ (SDImageCache *)sd_PTcategory_imageCache;
 
 /**
  *  移除sd自带的内存缓存和磁盘缓存（会将磁盘缓存路径下的所有删除）

@@ -17,13 +17,13 @@
  *
  *  @return SDWebImageManager
  */
-+ (SDWebImageManager *)sd_category_webImageManager
++ (SDWebImageManager *)sd_PTcategory_webImageManager
 {
     static dispatch_once_t once;
     static SDWebImageManager *instance;
     dispatch_once(&once, ^{
         instance = [[SDWebImageManager alloc]init];
-        [instance setValue:[SDImageCache sd_category_imageCache]forKey:@"imageCache"];
+        [instance setValue:[SDImageCache sd_PTcategory_imageCache]forKey:@"imageCache"];
     });
     return instance;
 }

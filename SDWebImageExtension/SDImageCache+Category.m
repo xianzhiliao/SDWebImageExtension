@@ -18,7 +18,7 @@
  *
  *  @return 处理过图片的缓存路径
  */
-+ (SDImageCache *)sd_category_imageCache
++ (SDImageCache *)sd_PTcategory_imageCache
 {
     static dispatch_once_t once;
     static SDImageCache *instance;
@@ -54,16 +54,16 @@
  */
 - (void)clearCategoryImageCache
 {
-    [[SDWebImageManager sd_category_webImageManager].imageCache clearMemory];
+    [[SDWebImageManager sd_PTcategory_webImageManager].imageCache clearMemory];
     
-    [[SDWebImageManager sd_category_webImageManager].imageCache clearDisk];
+    [[SDWebImageManager sd_PTcategory_webImageManager].imageCache clearDisk];
 }
 /**
  *  删除自己扩展的存储处理过图片的磁盘缓存中所有过期的存储如果超过最大值的话还会从最旧的删除知道减半
  */
 - (void)cleanCategoryDiskCache
 {
-    [[SDWebImageManager sd_category_webImageManager].imageCache cleanDisk];
+    [[SDWebImageManager sd_PTcategory_webImageManager].imageCache cleanDisk];
 }
 
 

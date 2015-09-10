@@ -42,7 +42,7 @@ typedef void(^SDDownLoadImageProcessBlock)();
 - (void)initNav
 {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:[SDImageCache sharedImageCache] action:@selector(clearCategoryImageCache)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"清理" style:UIBarButtonItemStylePlain target:[SDImageCache sd_category_imageCache] action:@selector(cleanCategoryDiskCache)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"清理" style:UIBarButtonItemStylePlain target:[SDImageCache sd_PTcategory_imageCache] action:@selector(cleanCategoryDiskCache)];
 }
 /*  初始化tableview */
 - (void)initTableView
@@ -75,7 +75,7 @@ typedef void(^SDDownLoadImageProcessBlock)();
     static NSString *identifer = @"MyTableViewCell";
     MyTableViewCell *cell = (MyTableViewCell*)[tableView dequeueReusableCellWithIdentifier:identifer];
     NSString *imageUrl = _arrayData[indexPath.row];
-    [SDWebImageManager sd_category_webImageManager].delegate = cell;
+    [SDWebImageManager sd_PTcategory_webImageManager].delegate = cell;
     // 设置为static，因为placeholder都是一样的，没有必要浪费资源每次处理
     static dispatch_once_t once;
     static UIImage *placeHolder = nil;
@@ -84,12 +84,12 @@ typedef void(^SDDownLoadImageProcessBlock)();
             placeHolder = [UIImage GLImage:[UIImage imageNamed:@"grape"] StyleRoundRect:(GLImageStyleRoundRectMake(cell.myImageView.frame.size.height / 4)) inImageView:cell.myImageView];
         }
     });
-    [cell.myImageView sd_category_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [cell.myImageView sd_PTcategory_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
     }];
-//    [cell.myImageView sd_category_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder];
+//    [cell.myImageView sd_PTcategory_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder];
     
     // 本地图片加载用sd自带的,在AppDelegate中添加了只读缓存路径，会从中读取(弊端就是图片名字全部要用md5加密过后的)
 //    [cell.myImageView sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:@"0.png"] andPlaceholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {

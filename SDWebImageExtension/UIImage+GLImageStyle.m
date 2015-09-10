@@ -125,7 +125,7 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 //    NSLog(@"before image size is %@",NSStringFromCGSize(image.size));
-    if ([SDImageCache sd_category_imageCache].shouldDecompressImages) {
+    if ([SDImageCache sd_PTcategory_imageCache].shouldDecompressImages) {
         image = [UIImage decodedImageWithImage:image];
 //        NSLog(@"after image size is %@",NSStringFromCGSize(image.size));
     }

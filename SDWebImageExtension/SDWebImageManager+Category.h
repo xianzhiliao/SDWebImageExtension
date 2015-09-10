@@ -16,7 +16,7 @@
  *
  *  @return SDWebImageManager
  */
-+ (SDWebImageManager *)sd_category_webImageManager;
++ (SDWebImageManager *)sd_PTcategory_webImageManager;
 
 
 @end
