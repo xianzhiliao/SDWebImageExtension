@@ -11,8 +11,8 @@
 #import "UIImageView+WebCache.h"
 #import "Masonry.h"
 #import "MyTableViewCell.h"
-#import "SDImageCache+Category.h"
-#import "UIImageView+Category.h"
+#import "SDImageCache+PTCache.h"
+#import "UIImageView+SizeFit.h"
 
 @interface ViewController ()<NSURLConnectionDataDelegate>
 

@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "UIImageView+WebCache.h"
-#import "SDWebImageManager+Category.h"
+#import "SDWebImageManager+PTManager.h"
 
-@interface SDImageCache(Category)
+@interface SDImageCache(PTCache)
 
 /**
  *  所有经过处理的图片都会保存到这个缓存路径下

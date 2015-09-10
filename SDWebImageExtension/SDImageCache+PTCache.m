@@ -7,11 +7,11 @@
 //
 
 #import "objc/runtime.h"
-#import "SDImageCache+Category.h"
+#import "SDImageCache+PTCache.h"
 #import "SDImageCache.h"
 
 
-@implementation SDImageCache(Category)
+@implementation SDImageCache(PTCache)
 
 /**
  *  所有经过处理的图片都会保存到这个缓存路径下

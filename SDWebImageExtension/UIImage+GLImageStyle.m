@@ -8,7 +8,7 @@
 
 #import "UIImage+GLImageStyle.h"
 #import "SDWebImageDecoder.h"
-#import "SDImageCache+Category.h"
+#import "SDImageCache+PTCache.h"
 
 @implementation UIImage (GLImageStyle)
 

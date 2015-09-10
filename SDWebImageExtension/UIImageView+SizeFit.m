@@ -7,16 +7,16 @@
 //
 
 #import "objc/runtime.h"
-#import "UIImageView+Category.h"
-#import "SDImageCache+Category.h"
+#import "UIImageView+SizeFit.h"
+#import "SDImageCache+PTCache.h"
 #include "UIView+WebCacheOperation.h"
-#import "SDWebImageManager+Category.h"
+#import "SDWebImageManager+PTManager.h"
 #import "SDWebImageDecoder.h"
 #import "UIImage+MultiFormat.h"
 
 static char imageURLKey;
 
-@implementation UIImageView(Category)
+@implementation UIImageView(SizeFit)
 
 /**
  *  图片需要处理的调用方法

@@ -11,7 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIImage+GLImageStyle.h"
 #import "SDWebImageDecoder.h"
-#import "UIImageView+Category.h"
+#import "UIImageView+SizeFit.h"
 
 #define MarginLeftAndRight 15
 #define MarginTopAndBottom 15

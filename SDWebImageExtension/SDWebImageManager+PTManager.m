@@ -7,11 +7,11 @@
 //
 
 #import "objc/runtime.h"
-#import "SDImageCache+Category.h"
+#import "SDImageCache+PTCache.h"
 #import "SDImageCache.h"
 
 
-@implementation SDWebImageManager(Category)
+@implementation SDWebImageManager(PTManager)
 /**
  *  web图片处理的SDWebImageManager
  *

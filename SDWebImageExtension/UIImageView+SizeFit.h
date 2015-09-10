@@ -11,7 +11,7 @@
 #import "UIImage+GLImageStyle.h"
 
 
-@interface UIImageView(Category)
+@interface UIImageView(SizeFit)
 /**
  *  图片需要处理的调用方法
  *

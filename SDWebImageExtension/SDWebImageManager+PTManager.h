@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 
 
-@interface SDWebImageManager(Category)
+@interface SDWebImageManager(PTManager)
 /**
  *  web图片处理的SDWebImageManager
  *
