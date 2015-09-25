@@ -38,7 +38,7 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
         CGSize canvasSize = CGSizeMake(imageViewWidth, imageViewHeight);
         CGRect drawRect = CGRectMake(0,0,imageViewWidth,imageViewHeight);
         return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
-    }
+    } // 后面两种格式在不透明的情况下都有问题
     else if(imageView.contentMode == UIViewContentModeScaleAspectFit)
     {
         // 画布大小和绘制区域
@@ -87,14 +87,14 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
     // 创建上下文
     //    UIGraphicsBeginImageContext(CGSizeMake(imageWidth, imageHeight));
     // 上面创建的图片清晰度和质量没有第下面方法好(参数意义，size指定将来创建出来的bitmap的大小,yes表示不透明，scale 表示缩放，0由系统计算)
-    UIGraphicsBeginImageContextWithOptions(canvasSize, YES, 0);
+    UIGraphicsBeginImageContextWithOptions(canvasSize, NO, 0);
 
     // 获取上下文
     CGContextRef context = UIGraphicsGetCurrentContext();
     // 设置背景色
     [bgcolor setFill];
     // 填充背景
-    UIRectFill(CGRectMake(0,0,canvasSize.width,canvasSize.height));
+//    UIRectFill(CGRectMake(0,0,canvasSize.width,canvasSize.height));
     // 设置画笔宽
     //    CGContextSetLineWidth(context, 2);
     // 设置画笔颜色

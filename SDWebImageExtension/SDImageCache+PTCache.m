@@ -68,8 +68,9 @@
 
 
 /**
-    重写存储方法,所有图片转成png,否则png会失去透明度
+    重写存储方法,所有图片强制转成png,png不会失去透明度
  */
+/*
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 #pragma mark ImageCache
@@ -118,5 +119,5 @@
     }
 }
 #pragma clang diagnostic pop
-
+*/
 @end

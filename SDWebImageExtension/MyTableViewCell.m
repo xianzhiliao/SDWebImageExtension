@@ -40,7 +40,7 @@
     _myImageView.backgroundColor = [UIColor whiteColor];
     _myImageView.contentMode = UIViewContentModeScaleAspectFill;
     CGFloat imageWidth = (MyTableViewCellHeight - 2 * MarginTopAndBottom);
-//     先设置宽高,否则有时会获取不到(因为还没调用layoutSubviews)
+    // 先设置宽高,否则有时会获取不到(因为还没调用layoutSubviews)
     _myImageView.frame = CGRectMake(0, 0, imageWidth, imageWidth);
     self.contentView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_myImageView];
@@ -64,12 +64,11 @@
 - (UIImage *)imageManager:(SDWebImageManager *)imageManager transformDownloadedImage:(UIImage *)image withURL:(NSURL *)imageURL
 {
     // 处理图片,返回处理过的图片会自动保存到sd_category_imageCache存储路径,如果需要原图保存到sharedImageCache,如果不需要保存原图，不保存
-    UIImage *formaterImage = [UIImage GLImage:image StyleRoundRect:GLImageStyleRoundRectMake(_myImageView.frame.size.height / 4)inImageView:_myImageView];
+    UIImage *formaterImage = [UIImage GLImage:image StyleRoundRect:GLImageStyleRoundRectMake(_myImageView.frame.size.height / 2)inImageView:_myImageView];
+    // 需要的话将原图片保存
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:imageURL];
-//     需要的话将原图片保存
     [[SDWebImageManager sharedManager].imageCache storeImage:image forKey:key];
     // 返回处理过的图片
-//    _myImageView.image = formaterImage;
     return formaterImage;
 }
 
