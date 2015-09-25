@@ -66,6 +66,15 @@
     [[SDWebImageManager sd_PTcategory_webImageManager].imageCache cleanDisk];
 }
 
+/**
+ *  sd所有的缓存空间(内存和磁盘)
+ *  @return ***MB
+ */
+- (CGFloat)cacheSize
+{
+    CGFloat sizeb = [[SDImageCache sharedImageCache]getSize] + [[SDImageCache sd_PTcategory_imageCache]getSize] + [[SDImageCache sharedImageCache]maxMemoryCost] + [[SDImageCache sd_PTcategory_imageCache]maxMemoryCost];
+    return  sizeb / (1024 * 1024);// 1MB = 1024 *1024 b
+}
 
 /**
     重写存储方法,所有图片强制转成png,png不会失去透明度

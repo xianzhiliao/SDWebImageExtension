@@ -35,6 +35,11 @@
  *  删除自己扩展的存储处理过图片的磁盘缓存中所有过期的存储如果超过最大值的话还会从最旧的删除知道减半
  */
 - (void)cleanCategoryDiskCache;
+/**
+ *  sd所有的缓存空间(内存和磁盘)
+ *  @return ***MB
+ */
+- (CGFloat)cacheSize;
 
 
 
