@@ -64,16 +64,18 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
         CGFloat heightPercent = imageHeight / imageViewHeight;
         CGFloat min = MIN(widthPercent, heightPercent);
         canvasSize = CGSizeMake(imageWidth / min, imageHeight / min);
-        if (min == heightPercent) {
-            CGFloat x = (canvasSize.width - imageViewWidth) / 2;
-            drawRect = CGRectMake(x, 0, imageViewWidth, imageViewHeight);
-        }
-        else
-        {
-            CGFloat y = (canvasSize.height - imageViewHeight) / 2;
-            drawRect = CGRectMake(0, y, imageViewWidth, imageViewHeight);
-        }
-        
+        // 以下注释掉的逻辑为imageview实际会显示的区域
+//        if (min == heightPercent) {
+//            CGFloat x = (canvasSize.width - imageViewWidth) / 2;
+//            drawRect = CGRectMake(x, 0, imageViewWidth, imageViewHeight);
+//        }
+//        else
+//        {
+//            CGFloat y = (canvasSize.height - imageViewHeight) / 2;
+//            drawRect = CGRectMake(0, y, imageViewWidth, imageViewHeight);
+//        }
+        // 取图片大小，imageview会自动适应（如果要切成实际显示的大小，则得到下面的图片后再根据上面DrawRect再裁减一次）
+        drawRect = CGRectMake(0, 0, canvasSize.width, canvasSize.height);
         return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
     }
     else
