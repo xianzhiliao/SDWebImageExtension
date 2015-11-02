@@ -7,14 +7,17 @@
 //
 #import <UIKit/UIKit.h>
 
-/* GLImageStyleRoundRect */
-struct GLImageStyleRoundRect {
+//-----------------------------
+/* GLImageFormater */
+struct GLImageFormater {
     CGFloat radius;
+    CGSize size;
+    UIViewContentMode contentMode;
 };
-typedef struct GLImageStyleRoundRect GLImageStyleRoundRect;
+typedef struct GLImageFormater GLImageFormater;
 
-/* Make a GLImageStyleRoundRect */
-GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius);
+/* Make a GLImageFormater */
+GLImageFormater GLImageFormaterMake(CGFloat radius,CGSize size,UIViewContentMode contentMode);
 
 
 
@@ -26,6 +29,6 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius);
  *
  *  @return 处理过后的圆角图片
  */
-+ (UIImage *)GLImage:(UIImage*)image StyleRoundRect:(GLImageStyleRoundRect)glImageStyleRoundRect inImageView:(UIImageView *)imageView;
++ (UIImage *)GLImage:(UIImage *)image imageFormater:(GLImageFormater)glImageFormater backGroundColor:(UIColor *)bgcolor;
 
 @end

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SDWebImageManager.h"
 #define MyTableViewCellHeight  88.0f
-@interface MyTableViewCell : UITableViewCell<SDWebImageManagerDelegate>
+#import "UIImage+GLImageStyle.h"
+
+@interface MyTableViewCell : UITableViewCell
 
 @property (nonatomic ,strong)UIImageView *myImageView;
++ (GLImageFormater)getImageFormater;
 @end

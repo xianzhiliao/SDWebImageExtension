@@ -28,6 +28,7 @@ typedef void(^SDDownLoadImageProcessBlock)();
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    [SDWebImageManager sd_PTcategory_webImageManager].delegate = self;
     [self initNav];
     [self initTableView];
     [self requestImageFromLocal];
@@ -48,6 +49,7 @@ typedef void(^SDDownLoadImageProcessBlock)();
 - (void)initTableView
 {
     [self.tableView registerClass:[MyTableViewCell class] forCellReuseIdentifier:NSStringFromClass([MyTableViewCell class])];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 #pragma mark  end
@@ -75,13 +77,12 @@ typedef void(^SDDownLoadImageProcessBlock)();
     static NSString *identifer = @"MyTableViewCell";
     MyTableViewCell *cell = (MyTableViewCell*)[tableView dequeueReusableCellWithIdentifier:identifer];
     NSString *imageUrl = _arrayData[indexPath.row];
-    [SDWebImageManager sd_PTcategory_webImageManager].delegate = cell;
     // 设置为static，因为placeholder都是一样的，没有必要浪费资源每次处理
     static dispatch_once_t once;
     static UIImage *placeHolder = nil;
     dispatch_once(&once, ^{
         if (placeHolder == nil) {
-            placeHolder = [UIImage GLImage:[UIImage imageNamed:@"grape"] StyleRoundRect:(GLImageStyleRoundRectMake(cell.myImageView.frame.size.height / 4)) inImageView:cell.myImageView];
+            placeHolder = [UIImage GLImage:[UIImage imageNamed:@"grape"]imageFormater:[MyTableViewCell getImageFormater] backGroundColor:[UIColor clearColor]];
         }
     });
     [cell.myImageView sd_PTcategory_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
@@ -107,13 +108,26 @@ typedef void(^SDDownLoadImageProcessBlock)();
 /** cell的高度 */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return MyTableViewCellHeight;
+    return (int)MyTableViewCellHeight;
 }
 
 /** cell点击事件 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    MyTableViewCell *cell = (MyTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+
+}
+
+#pragma mark - SDWebImageManagerDelegate
+
+- (UIImage *)imageManager:(SDWebImageManager *)imageManager transformDownloadedImage:(UIImage *)image withURL:(NSURL *)imageURL
+{
+    // 处理图片,返回处理过的图片会自动保存到sd_category_imageCache存储路径,如果需要原图保存到sharedImageCache,如果不需要保存原图，不保存
+    UIImage *formaterImage = [UIImage GLImage:image imageFormater:[MyTableViewCell getImageFormater] backGroundColor:[UIColor clearColor]];
+    // 需要的话将原图片保存
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:imageURL];
+    [[SDWebImageManager sharedManager].imageCache storeImage:image forKey:key];
+    // 返回处理过的图片
+    return formaterImage;
 }
 
 #pragma mark end

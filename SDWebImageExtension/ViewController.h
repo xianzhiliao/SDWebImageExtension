@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UITableViewController
+#import "SDWebImageManager.h"
+@interface ViewController : UITableViewController<SDWebImageManagerDelegate>
 
 
 @end

@@ -12,12 +12,13 @@
 
 @implementation UIImage (GLImageStyle)
 
-/* Make a GLImageStyleRoundRect */
-GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
+GLImageFormater GLImageFormaterMake(CGFloat radius,CGSize size,UIViewContentMode contentMode)
 {
-    GLImageStyleRoundRect roundRect;
-    roundRect.radius = radius;
-    return roundRect;
+    GLImageFormater formater;
+    formater.radius = radius;
+    formater.size = size;
+    formater.contentMode = contentMode;
+    return formater;
 }
 
 /**
@@ -26,35 +27,35 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
  *  @return 处理过后的圆角图片
  */
 
-+ (UIImage *)GLImage:(UIImage *)image StyleRoundRect:(GLImageStyleRoundRect)glImageStyleRoundRect inImageView:(UIImageView *)imageView
++ (UIImage *)GLImage:(UIImage *)image imageFormater:(GLImageFormater)glImageFormater backGroundColor:(UIColor *)bgcolor
 {
-    CGFloat imageViewWidth = imageView.frame.size.width;
-    CGFloat imageViewHeight = imageView.frame.size.height;
+    CGFloat imageViewWidth = glImageFormater.size.width;
+    CGFloat imageViewHeight = glImageFormater.size.height;
     CGFloat imageWidth = image.size.width;
     CGFloat imageHeight = image.size.height;
     CGFloat heightWidthPercent = imageHeight / imageWidth;
-    CGFloat radius = glImageStyleRoundRect.radius;
-    if (imageView.contentMode == UIViewContentModeScaleToFill) {
+    CGFloat radius = glImageFormater.radius;
+    if (glImageFormater.contentMode == UIViewContentModeScaleToFill) {
         CGSize canvasSize = CGSizeMake(imageViewWidth, imageViewHeight);
         CGRect drawRect = CGRectMake(0,0,imageViewWidth,imageViewHeight);
-        return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
+        return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
     } // 后面两种格式在不透明的情况下都有问题
-    else if(imageView.contentMode == UIViewContentModeScaleAspectFit)
+    else if(glImageFormater.contentMode == UIViewContentModeScaleAspectFit)
     {
         // 画布大小和绘制区域
         if (imageViewHeight >= imageViewWidth) {
             CGSize canvasSize = CGSizeMake(imageViewHeight / heightWidthPercent, imageViewHeight);
             CGRect drawRect = CGRectMake(0, 0, canvasSize.width, canvasSize.height);
-            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
+            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
         }
         else
         {
             CGSize canvasSize = CGSizeMake(imageViewWidth,imageViewWidth * heightWidthPercent);
             CGRect drawRect = CGRectMake(0, 0, canvasSize.width, canvasSize.height);
-            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
+            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
         }
     }
-    else if(imageView.contentMode == UIViewContentModeScaleAspectFill)
+    else if(glImageFormater.contentMode == UIViewContentModeScaleAspectFill)
     {
         // 画布大小为图片放缩后的大小,drawRect是imageView的大小
         
@@ -76,7 +77,7 @@ GLImageStyleRoundRect GLImageStyleRoundRectMake(CGFloat radius)
 //        }
         // 取图片大小，imageview会自动适应（如果要切成实际显示的大小，则得到下面的图片后再根据上面DrawRect再裁减一次）
         drawRect = CGRectMake(0, 0, canvasSize.width, canvasSize.height);
-        return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:imageView.backgroundColor InDrawRect:drawRect];
+        return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
     }
     else
     {

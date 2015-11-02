@@ -18,7 +18,7 @@
 
 @interface MyTableViewCell()
 
-
+@property (nonatomic, strong)UIView *bottomLine;
 
 @end
 
@@ -29,49 +29,45 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        [self createSubView];
+        [self createSubViews];
     }
     return self;
 }
 
-- (void)createSubView
+- (void)createSubViews
 {
-    _myImageView = [UIImageView new];
-    _myImageView.backgroundColor = [UIColor whiteColor];
-    _myImageView.contentMode = UIViewContentModeScaleAspectFill;
-    CGFloat imageWidth = (MyTableViewCellHeight - 2 * MarginTopAndBottom);
-    // 先设置宽高,否则有时会获取不到(因为还没调用layoutSubviews)
-    _myImageView.frame = CGRectMake(0, 0, imageWidth, imageWidth);
     self.contentView.backgroundColor = [UIColor whiteColor];
+    
+    _myImageView = [UIImageView new];
+    _myImageView.backgroundColor = [UIColor clearColor];
+    _myImageView.contentMode = UIViewContentModeScaleToFill;
     [self.contentView addSubview:_myImageView];
+    
+    _bottomLine = [UIView new];
+    _bottomLine.backgroundColor = [UIColor colorWithRed:224.0/255.0 green:224.0/255.0 blue:224.0/255.0 alpha:1.0];
+    [self.contentView addSubview:_bottomLine];
 }
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     __weak __typeof(&*self)weakSelf = self;
-    CGFloat imageWidth = (MyTableViewCellHeight - 2 * MarginTopAndBottom);
+    
     [self.myImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.contentView).offset(MarginLeftAndRight);
         make.top.equalTo(weakSelf.contentView).offset(MarginTopAndBottom);
-        make.width.mas_equalTo(imageWidth);
-        make.height.mas_equalTo(imageWidth);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(60);
+    }];
+    
+    [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(weakSelf.contentView);
+        make.height.mas_equalTo(1.0f);
+        make.left.right.equalTo(weakSelf.contentView);
     }];
 }
 
-
-#pragma mark - SDWebImageManagerDelegate
-
-- (UIImage *)imageManager:(SDWebImageManager *)imageManager transformDownloadedImage:(UIImage *)image withURL:(NSURL *)imageURL
++ (GLImageFormater)getImageFormater
 {
-    // 处理图片,返回处理过的图片会自动保存到sd_category_imageCache存储路径,如果需要原图保存到sharedImageCache,如果不需要保存原图，不保存
-    UIImage *formaterImage = [UIImage GLImage:image StyleRoundRect:GLImageStyleRoundRectMake(_myImageView.frame.size.height / 2)inImageView:_myImageView];
-    // 需要的话将原图片保存
-    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:imageURL];
-    [[SDWebImageManager sharedManager].imageCache storeImage:image forKey:key];
-    // 返回处理过的图片
-    return formaterImage;
+    return GLImageFormaterMake(30, CGSizeMake(60, 60), UIViewContentModeScaleToFill);
 }
-
-#pragma mark end
-
 @end
