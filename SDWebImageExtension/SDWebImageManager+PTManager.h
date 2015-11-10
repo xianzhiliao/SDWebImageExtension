@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "UIImageView+WebCache.h"
+#import "UIImage+PTImageStyle.h"
 
-
-@interface SDWebImageManager(PTManager)
+@interface SDWebImageManager(PTManager)<SDWebImageManagerDelegate>
 /**
  *  web图片处理的SDWebImageManager
  *
@@ -18,5 +18,6 @@
  */
 + (SDWebImageManager *)sd_PTcategory_webImageManager;
 
-
+//- (instancetype) initWithPTImageFormater:(PTImageFormater)ptImageFormater isCacheOriginalImage:(BOOL)isCacheOriginalImage;
+- (void)setPTImageFormater:(PTImageFormater)ptImageFormater isCacheOriginalImage:(BOOL)isCacheOriginalImage;
 @end

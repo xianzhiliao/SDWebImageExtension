@@ -94,6 +94,11 @@ static char imageURLKey;
     }
 }
 
+- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletionBlock)completedBlock
+{
+    [self sd_PTcategory_setImageWithURL:url placeholderImage:placeholder options:SDWebImageTransformAnimatedImage progress:nil completed:completedBlock];
+}
+
 - (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
 {
     [self sd_PTcategory_setImageWithURL:url placeholderImage:placeholder options:SDWebImageTransformAnimatedImage progress:nil completed:nil];

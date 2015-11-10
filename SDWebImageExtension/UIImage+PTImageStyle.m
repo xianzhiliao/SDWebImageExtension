@@ -1,61 +1,65 @@
 //
-//  UIImage+GLImageStyle.m
+//  UIImage+PTImageStyle.m
 //  UIImage
 //
 //  Created by xianzhiliao on 15/8/24.
 //  Copyright (c) 2015年 xianzhiliao. All rights reserved.
 //
 
-#import "UIImage+GLImageStyle.h"
+#import "UIImage+PTImageStyle.h"
 #import "SDWebImageDecoder.h"
 #import "SDImageCache+PTCache.h"
 
-@implementation UIImage (GLImageStyle)
+@implementation UIImage (PTImageStyle)
 
-GLImageFormater GLImageFormaterMake(CGFloat radius,CGSize size,UIViewContentMode contentMode)
+PTImageFormater PTImageFormaterMake(CGFloat radius,CGSize size,UIViewContentMode contentMode)
 {
-    GLImageFormater formater;
+    PTImageFormater formater;
     formater.radius = radius;
     formater.size = size;
     formater.contentMode = contentMode;
     return formater;
 }
 
+- (UIImage *)imageWithPTImageFormater:(PTImageFormater)ptImageFormater
+{
+    return [self imageWithPTFormater:ptImageFormater backGroundColor:[UIColor clearColor]];
+}
 /**
  *  将图片处理成圆角图片
  *
  *  @return 处理过后的圆角图片
  */
 
-+ (UIImage *)GLImage:(UIImage *)image imageFormater:(GLImageFormater)glImageFormater backGroundColor:(UIColor *)bgcolor
+- (UIImage *)imageWithPTFormater:(PTImageFormater)ptImageFormater backGroundColor:(UIColor *)bgcolor
 {
-    CGFloat imageViewWidth = glImageFormater.size.width;
-    CGFloat imageViewHeight = glImageFormater.size.height;
-    CGFloat imageWidth = image.size.width;
-    CGFloat imageHeight = image.size.height;
+    CGFloat imageViewWidth = ptImageFormater.size.width;
+    CGFloat imageViewHeight = ptImageFormater.size.height;
+    CGFloat imageWidth = self.size.width;
+    CGFloat imageHeight = self.size.height;
     CGFloat heightWidthPercent = imageHeight / imageWidth;
-    CGFloat radius = glImageFormater.radius;
-    if (glImageFormater.contentMode == UIViewContentModeScaleToFill) {
+    CGFloat radius = ptImageFormater.radius;
+    if (ptImageFormater.contentMode == UIViewContentModeScaleToFill) {
         CGSize canvasSize = CGSizeMake(imageViewWidth, imageViewHeight);
         CGRect drawRect = CGRectMake(0,0,imageViewWidth,imageViewHeight);
-        return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
+        return [self imageWithStyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
     } // 后面两种格式在不透明的情况下都有问题
-    else if(glImageFormater.contentMode == UIViewContentModeScaleAspectFit)
+    else if(ptImageFormater.contentMode == UIViewContentModeScaleAspectFit)
     {
         // 画布大小和绘制区域
         if (imageViewHeight >= imageViewWidth) {
             CGSize canvasSize = CGSizeMake(imageViewHeight / heightWidthPercent, imageViewHeight);
             CGRect drawRect = CGRectMake(0, 0, canvasSize.width, canvasSize.height);
-            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
+            return [self imageWithStyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
         }
         else
         {
             CGSize canvasSize = CGSizeMake(imageViewWidth,imageViewWidth * heightWidthPercent);
             CGRect drawRect = CGRectMake(0, 0, canvasSize.width, canvasSize.height);
-            return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
+            return [self imageWithStyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
         }
     }
-    else if(glImageFormater.contentMode == UIViewContentModeScaleAspectFill)
+    else if(ptImageFormater.contentMode == UIViewContentModeScaleAspectFill)
     {
         // 画布大小为图片放缩后的大小,drawRect是imageView的大小
         
@@ -77,7 +81,7 @@ GLImageFormater GLImageFormaterMake(CGFloat radius,CGSize size,UIViewContentMode
 //        }
         // 取图片大小，imageview会自动适应（如果要切成实际显示的大小，则得到下面的图片后再根据上面DrawRect再裁减一次）
         drawRect = CGRectMake(0, 0, canvasSize.width, canvasSize.height);
-        return [self GLImage:image StyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
+        return [self imageWithStyleRoundRectRadius:radius CanvasSize:canvasSize imageViewBackgroundColor:bgcolor InDrawRect:drawRect];
     }
     else
     {
@@ -85,7 +89,7 @@ GLImageFormater GLImageFormaterMake(CGFloat radius,CGSize size,UIViewContentMode
     }
     
 }
-+ (UIImage *)GLImage:(UIImage *)image StyleRoundRectRadius:(CGFloat)radius CanvasSize:(CGSize )canvasSize imageViewBackgroundColor:(UIColor *)bgcolor InDrawRect:(CGRect)drawRect
+- (UIImage *)imageWithStyleRoundRectRadius:(CGFloat)radius CanvasSize:(CGSize )canvasSize imageViewBackgroundColor:(UIColor *)bgcolor InDrawRect:(CGRect)drawRect
 {
     // 创建上下文
     //    UIGraphicsBeginImageContext(CGSizeMake(imageWidth, imageHeight));
@@ -112,11 +116,11 @@ GLImageFormater GLImageFormaterMake(CGFloat radius,CGSize size,UIViewContentMode
     CGPathRelease(path);
     // 裁减
     CGContextClip(context);
-    [image drawInRect:drawRect];
+    [self drawInRect:drawRect];
     // 渲染
     CGContextStrokePath(context);
     // 获取处理过后的图片
-    image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
 //    if ([SDImageCache sd_PTcategory_imageCache].shouldDecompressImages) {

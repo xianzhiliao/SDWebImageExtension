@@ -9,7 +9,7 @@
 #import "MyTableViewCell.h"
 #import "Masonry.h"
 #import "UIImageView+WebCache.h"
-#import "UIImage+GLImageStyle.h"
+#import "UIImage+PTImageStyle.h"
 #import "SDWebImageDecoder.h"
 #import "UIImageView+SizeFit.h"
 
@@ -66,8 +66,8 @@
     }];
 }
 
-+ (GLImageFormater)getImageFormater
++ (PTImageFormater)getImageFormater
 {
-    return GLImageFormaterMake(30, CGSizeMake(60, 60), UIViewContentModeScaleToFill);
+    return PTImageFormaterMake(30, CGSizeMake(60, 60), UIViewContentModeScaleToFill);
 }
 @end

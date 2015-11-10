@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "UIImageView+WebCache.h"
-#import "UIImage+GLImageStyle.h"
+#import "UIImage+PTImageStyle.h"
 
 
 @interface UIImageView(SizeFit)
@@ -23,6 +23,7 @@
  */
 - (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
 - (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;
+- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletionBlock)completedBlock;
 /**
  *  获取需要处理图片的当前url
  *

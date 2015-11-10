@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #define MyTableViewCellHeight  88.0f
-#import "UIImage+GLImageStyle.h"
+#import "UIImage+PTImageStyle.h"
 
 @interface MyTableViewCell : UITableViewCell
 
 @property (nonatomic ,strong)UIImageView *myImageView;
-+ (GLImageFormater)getImageFormater;
++ (PTImageFormater)getImageFormater;
 @end

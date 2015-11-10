@@ -54,16 +54,16 @@
  */
 - (void)clearCategoryImageCache
 {
-    [[SDWebImageManager sd_PTcategory_webImageManager].imageCache clearMemory];
+    [[SDImageCache sd_PTcategory_imageCache] clearMemory];
     
-    [[SDWebImageManager sd_PTcategory_webImageManager].imageCache clearDisk];
+    [[SDImageCache sd_PTcategory_imageCache] clearDisk];
 }
 /**
  *  删除自己扩展的存储处理过图片的磁盘缓存中所有过期的存储如果超过最大值的话还会从最旧的删除知道减半
  */
 - (void)cleanCategoryDiskCache
 {
-    [[SDWebImageManager sd_PTcategory_webImageManager].imageCache cleanDisk];
+    [[SDImageCache sd_PTcategory_imageCache] cleanDisk];
 }
 
 /**

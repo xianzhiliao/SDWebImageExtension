@@ -19,7 +19,7 @@
 		DDC645171B9222BA009E176A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDC645161B9222BA009E176A /* Images.xcassets */; };
 		DDC6451A1B9222BB009E176A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDC645181B9222BA009E176A /* LaunchScreen.xib */; };
 		DDC645261B9222BB009E176A /* SDWebImageExtensionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC645251B9222BB009E176A /* SDWebImageExtensionTests.m */; };
-		DDC645331B9222E8009E176A /* UIImage+GLImageStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC645301B9222E8009E176A /* UIImage+GLImageStyle.m */; };
+		DDC645331B9222E8009E176A /* UIImage+PTImageStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC645301B9222E8009E176A /* UIImage+PTImageStyle.m */; };
 		DDC645361B92236F009E176A /* image.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDC645351B92236F009E176A /* image.plist */; };
 		DDE00BAE1B934E8E007F3AFF /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE00BAD1B934E8E007F3AFF /* MyTableViewCell.m */; };
 		FE95B9B4432B5360B7E10CC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A4B5E10976565C206BF4D5 /* libPods.a */; };
@@ -60,8 +60,8 @@
 		DDC6451F1B9222BB009E176A /* SDWebImageExtensionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SDWebImageExtensionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC645241B9222BB009E176A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDC645251B9222BB009E176A /* SDWebImageExtensionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDWebImageExtensionTests.m; sourceTree = "<group>"; };
-		DDC6452F1B9222E8009E176A /* UIImage+GLImageStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GLImageStyle.h"; sourceTree = "<group>"; };
-		DDC645301B9222E8009E176A /* UIImage+GLImageStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GLImageStyle.m"; sourceTree = "<group>"; };
+		DDC6452F1B9222E8009E176A /* UIImage+PTImageStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+PTImageStyle.h"; sourceTree = "<group>"; };
+		DDC645301B9222E8009E176A /* UIImage+PTImageStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+PTImageStyle.m"; sourceTree = "<group>"; };
 		DDC645351B92236F009E176A /* image.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = image.plist; sourceTree = "<group>"; };
 		DDE00BAC1B934E8E007F3AFF /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
 		DDE00BAD1B934E8E007F3AFF /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
@@ -133,8 +133,8 @@
 				DDC645111B9222BA009E176A /* ViewController.m */,
 				DDE00BAC1B934E8E007F3AFF /* MyTableViewCell.h */,
 				DDE00BAD1B934E8E007F3AFF /* MyTableViewCell.m */,
-				DDC6452F1B9222E8009E176A /* UIImage+GLImageStyle.h */,
-				DDC645301B9222E8009E176A /* UIImage+GLImageStyle.m */,
+				DDC6452F1B9222E8009E176A /* UIImage+PTImageStyle.h */,
+				DDC645301B9222E8009E176A /* UIImage+PTImageStyle.m */,
 				65D3DA701B96C115000AAB9B /* SDImageCache+PTCache.h */,
 				65D3DA711B96C115000AAB9B /* SDImageCache+PTCache.m */,
 				65D3DA731B96C14D000AAB9B /* SDWebImageManager+PTManager.h */,
@@ -317,7 +317,7 @@
 				DDC6450C1B9222BA009E176A /* AppDelegate.m in Sources */,
 				65D3DA751B96C14D000AAB9B /* SDWebImageManager+PTManager.m in Sources */,
 				DDE00BAE1B934E8E007F3AFF /* MyTableViewCell.m in Sources */,
-				DDC645331B9222E8009E176A /* UIImage+GLImageStyle.m in Sources */,
+				DDC645331B9222E8009E176A /* UIImage+PTImageStyle.m in Sources */,
 				DDC645091B9222BA009E176A /* main.m in Sources */,
 				DDC645121B9222BA009E176A /* ViewController.m in Sources */,
 				65D3DA721B96C115000AAB9B /* SDImageCache+PTCache.m in Sources */,
