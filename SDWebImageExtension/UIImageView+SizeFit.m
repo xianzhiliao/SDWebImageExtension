@@ -10,7 +10,6 @@
 #import "UIImageView+SizeFit.h"
 #import "SDImageCache+PTCache.h"
 #include "UIView+WebCacheOperation.h"
-#import "SDWebImageManager+PTManager.h"
 #import "SDWebImageDecoder.h"
 #import "UIImage+MultiFormat.h"
 

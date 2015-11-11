@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "UIImageView+WebCache.h"
-#import "SDWebImageManager+PTManager.h"
+#import "PTWebImageManager.h"
 
 @interface SDImageCache(PTCache)
 

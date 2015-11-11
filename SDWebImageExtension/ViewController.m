@@ -13,6 +13,7 @@
 #import "MyTableViewCell.h"
 #import "SDImageCache+PTCache.h"
 #import "UIImageView+SizeFit.h"
+#import "PTWebImageManager.h"
 
 @interface ViewController ()<NSURLConnectionDataDelegate>
 
@@ -30,7 +31,7 @@ typedef void(^SDDownLoadImageProcessBlock)();
     static dispatch_once_t once;
     static SDWebImageManager *instance;
     dispatch_once(&once, ^{
-        instance = [[SDWebImageManager alloc]initWithPTImageFormater:[MyTableViewCell getImageFormater] isCacheOriginalImage:YES];
+        instance = [[PTWebImageManager alloc]initWithPTImageFormater:[MyTableViewCell getImageFormater] isCacheOriginalImage:YES];
     });
     return instance;
 }
