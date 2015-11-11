@@ -21,9 +21,10 @@
  *  @param progressBlock  progressBlock description
  *  @param completedBlock completedBlock description
  */
-- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
-- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;
-- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletionBlock)completedBlock;
+- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder sdWebImageManager:(SDWebImageManager *)manager;
+- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder sdWebImageManager:(SDWebImageManager *)manager completed:(SDWebImageCompletionBlock)completedBlock;
+- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options sdWebImageManager:(SDWebImageManager *)manager progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
+
 /**
  *  获取需要处理图片的当前url
  *

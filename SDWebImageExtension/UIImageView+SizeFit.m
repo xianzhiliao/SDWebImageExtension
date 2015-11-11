@@ -27,7 +27,7 @@ static char imageURLKey;
  *  @param progressBlock  progressBlock description
  *  @param completedBlock completedBlock description
  */
-- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
+- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options sdWebImageManager:(SDWebImageManager *)manager progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
 {
     [self sd_cancelCurrentImageLoad];
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:url];
@@ -60,7 +60,7 @@ static char imageURLKey;
             // 没缓存进行下载,在代理方法中处理图片,会自动将处理过的图片保存到sd_category_imageCache存储路径,如果需要原图保存到sharedImageCache,如果不需要保存原图，不保存
             else {
                 __weak UIImageView *wself = self;
-                id <SDWebImageOperation> operation = [[SDWebImageManager sd_PTcategory_webImageManager] downloadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                id <SDWebImageOperation> operation = [manager downloadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                     if (!wself) return;
                     dispatch_main_sync_safe(^{
                         if (!wself) return;
@@ -94,14 +94,14 @@ static char imageURLKey;
     }
 }
 
-- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletionBlock)completedBlock
+- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder sdWebImageManager:(SDWebImageManager *)manager completed:(SDWebImageCompletionBlock)completedBlock
 {
-    [self sd_PTcategory_setImageWithURL:url placeholderImage:placeholder options:SDWebImageTransformAnimatedImage progress:nil completed:completedBlock];
+    [self sd_PTcategory_setImageWithURL:url placeholderImage:placeholder options:SDWebImageTransformAnimatedImage sdWebImageManager:manager progress:nil completed:completedBlock];
 }
 
-- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
+- (void)sd_PTcategory_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder sdWebImageManager:(SDWebImageManager *)manager
 {
-    [self sd_PTcategory_setImageWithURL:url placeholderImage:placeholder options:SDWebImageTransformAnimatedImage progress:nil completed:nil];
+    [self sd_PTcategory_setImageWithURL:url placeholderImage:placeholder options:SDWebImageTransformAnimatedImage sdWebImageManager:manager progress:nil completed:nil];
 }
 
 /**

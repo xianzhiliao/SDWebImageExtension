@@ -25,11 +25,19 @@ typedef void(^SDDownLoadImageProcessBlock)();
 
 @implementation ViewController
 
++ (SDWebImageManager *)myTableViewCellWebImageManager
+{
+    static dispatch_once_t once;
+    static SDWebImageManager *instance;
+    dispatch_once(&once, ^{
+        instance = [[SDWebImageManager alloc]initWithPTImageFormater:[MyTableViewCell getImageFormater] isCacheOriginalImage:YES];
+    });
+    return instance;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-//    [SDWebImageManager sd_PTcategory_webImageManager].delegate = self;
-    [[SDWebImageManager sd_PTcategory_webImageManager]setPTImageFormater:[MyTableViewCell getImageFormater] isCacheOriginalImage:NO];
     [self initNav];
     [self initTableView];
     [self requestImageFromLocal];
@@ -86,7 +94,7 @@ typedef void(^SDDownLoadImageProcessBlock)();
             placeHolder = [[UIImage imageNamed:@"grape"] imageWithPTImageFormater:[MyTableViewCell getImageFormater]];
         }
     });
-    [cell.myImageView sd_PTcategory_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [cell.myImageView sd_PTcategory_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder options:SDWebImageTransformAnimatedImage sdWebImageManager:[ViewController myTableViewCellWebImageManager] progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         

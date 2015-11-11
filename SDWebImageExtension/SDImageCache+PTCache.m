@@ -25,7 +25,7 @@
     dispatch_once(&once, ^{
         instance = [[SDImageCache alloc]initWithNamespace:@"formater"];
         // 字节数 byte (KB = 1024byte)
-        instance.maxCacheSize = 8 * 1024 * 60;//30KB左右的图片可以存15张左右，达到这个值清理后会只留一半差不多7张左右
+//        instance.maxCacheSize = 8 * 1024 * 60;//30KB左右的图片可以存15张左右，达到这个值清理后会只留一半差不多7张左右
     });
     return instance;
 }

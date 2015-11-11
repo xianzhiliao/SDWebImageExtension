@@ -14,38 +14,22 @@
 static PTImageFormater imageFormater;
 static BOOL isCache;
 @implementation SDWebImageManager(PTManager)
-/**
- *  web图片处理的SDWebImageManager(目前只支持同时处理一种图片格式)
- *
- *  @return SDWebImageManager
- */
-+ (SDWebImageManager *)sd_PTcategory_webImageManager
+
+- (void)setIsCacheOriginalImage:(BOOL)isCacheOriginalImage
 {
-    static dispatch_once_t once;
-    static SDWebImageManager *instance;
-    dispatch_once(&once, ^{
-        instance = [[SDWebImageManager alloc]init];
-        [instance setValue:[SDImageCache sd_PTcategory_imageCache]forKey:@"imageCache"];
-        instance.delegate = instance;
-    });
-    return instance;
-}
-- (void)setPTImageFormater:(PTImageFormater)ptImageFormater isCacheOriginalImage:(BOOL)isCacheOriginalImage
-{
-    imageFormater = ptImageFormater;
     isCache = isCacheOriginalImage;
 }
-//- (instancetype)initWithPTImageFormater:(PTImageFormater)ptImageFormater isCacheOriginalImage:(BOOL)isCacheOriginalImage
-//{
-//    SDWebImageManager *instance = [[SDWebImageManager alloc]init];
-//    if (instance) {
-//        [instance setValue:[SDImageCache sd_PTcategory_imageCache]forKey:@"imageCache"];
-//        instance.delegate = instance;
-//    }
-//    imageFormater = ptImageFormater;
-//    isCache = isCacheOriginalImage;
-//    return instance;
-//}
+- (instancetype)initWithPTImageFormater:(PTImageFormater)ptImageFormater isCacheOriginalImage:(BOOL)isCacheOriginalImage
+{
+    SDWebImageManager *instance = [[SDWebImageManager alloc]init];
+    if (instance) {
+        [instance setValue:[SDImageCache sd_PTcategory_imageCache]forKey:@"imageCache"];
+        instance.delegate = instance;
+    }
+    imageFormater = ptImageFormater;
+    isCache = isCacheOriginalImage;
+    return instance;
+}
 #pragma mark - SDWebImageManagerDelegate
 
 - (UIImage *)imageManager:(SDWebImageManager *)imageManager transformDownloadedImage:(UIImage *)image withURL:(NSURL *)imageURL
